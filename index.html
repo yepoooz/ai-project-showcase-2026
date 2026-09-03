@@ -1,0 +1,391 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="四个 AI 辅助的产品设计项目"><title>AI 项目作品集｜四个产品设计实践</title><style>
+:root {
+  --canvas: #d9effd;
+  --ink: #17212a;
+  --muted: #485762;
+  --paper: #fffefc;
+  --pink: #ff84bd;
+  --pink-dark: #ee48a2;
+  --line: rgba(23, 33, 42, .16);
+  --background: var(--canvas);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: #fff;
+  --secondary: #c8e6f8;
+  --secondary-foreground: var(--ink);
+  --accent: #c8e6f8;
+  --accent-foreground: var(--ink);
+  --border: rgba(23, 33, 42, .2);
+  --input: rgba(23, 33, 42, .2);
+  --ring: #ff58aa;
+  --radius: .6rem;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  padding: 0 clamp(22px, 5vw, 72px);
+  border-bottom: 1px solid rgba(23, 33, 42, .11);
+  background: rgba(217, 239, 253, .88);
+  backdrop-filter: blur(16px);
+}
+.logo { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; letter-spacing: .13em; }
+.logo svg { width: 17px; color: var(--pink-dark); }
+.topbar nav { display: flex; gap: 28px; font-size: 12px; font-weight: 700; }
+.topbar nav a { padding: 6px 0; border-bottom: 2px solid transparent; }
+.topbar nav a:hover { border-bottom-color: var(--pink-dark); }
+
+.intro {
+  min-height: calc(100svh - 68px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, .65fr);
+  gap: clamp(42px, 7vw, 110px);
+  padding: clamp(58px, 8vw, 110px) clamp(24px, 7vw, 100px) 110px;
+}
+.intro-main { align-self: start; }
+.tiny-label { margin: 0 0 24px; font-size: 11px; font-weight: 800; letter-spacing: .18em; }
+.intro-main h1,
+.about-section h2 {
+  margin: 0;
+  font-family: "Comic Sans MS", "Bradley Hand", "Kaiti SC", cursive;
+  font-size: clamp(54px, 7.3vw, 112px);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -.055em;
+}
+.intro-main h1 span { color: var(--pink-dark); }
+.intro-main > p:not(.tiny-label) { margin: 28px 0 0; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.65; }
+.intro-main > a { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; padding: 11px 16px; border: 2px solid var(--ink); border-radius: 7px; background: var(--paper); font-size: 12px; font-weight: 800; box-shadow: 4px 4px 0 var(--ink); }
+.intro-main > a:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+.intro-main > a svg { width: 16px; }
+
+.how-card {
+  position: relative;
+  align-self: start;
+  margin-top: 10px;
+  padding: 25px 25px 24px;
+  border: 1px solid rgba(23, 33, 42, .1);
+  border-radius: 3px;
+  background: var(--paper);
+  box-shadow: 8px 9px 0 rgba(23, 33, 42, .06);
+  transform: rotate(.6deg);
+}
+.how-card > svg { position: absolute; right: 18px; top: 18px; width: 28px; height: 28px; padding: 5px; border-radius: 50%; background: #d8ff5f; }
+.how-card h2 { margin: 0 46px 14px 0; font-family: "Comic Sans MS", "Bradley Hand", cursive; font-size: 21px; }
+.how-card p, .how-card small { display: block; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.how-card small { margin-top: 13px; }
+
+.project-picks {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+.project-picks a {
+  --pick: #ff9fc9;
+  display: grid;
+  grid-template-columns: 155px 48px minmax(190px, 1fr) minmax(150px, .65fr) 26px;
+  align-items: center;
+  gap: 22px;
+  min-height: 158px;
+  padding: 10px 24px 10px 8px;
+  border: 2px solid color-mix(in srgb, var(--pick) 88%, #17212a);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--pick) 42%, white);
+  box-shadow: 7px 8px 0 color-mix(in srgb, var(--pick) 70%, #17212a);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.project-picks a:nth-child(even) { transform: rotate(.25deg); }
+.project-picks a:nth-child(odd) { transform: rotate(-.2deg); }
+.project-picks a:hover { transform: translate(3px, 3px) rotate(0); box-shadow: 4px 5px 0 color-mix(in srgb, var(--pick) 70%, #17212a); }
+.project-picks a > span { display: grid; place-items: center; width: 42px; height: 42px; border: 1.5px solid var(--ink); border-radius: 50%; background: rgba(255,255,255,.5); font-family: "Comic Sans MS", cursive; font-weight: 800; }
+.project-picks strong { font-family: "Comic Sans MS", "Kaiti SC", cursive; font-size: clamp(24px, 3vw, 40px); line-height: 1.1; }
+.project-picks small { font-size: 12px; font-weight: 700; }
+.project-picks > a > svg { width: 20px; }
+
+.bear-sprite {
+  width: 110px;
+  height: 115px;
+  justify-self: center;
+  background-image: url('assets/bear-sprite-transparent.png');
+  background-repeat: no-repeat;
+  background-size: 245px 490px;
+  background-position-x: center;
+}
+.bear-1 { background-position-y: -8px; }
+.bear-2 { background-position-y: -120px; }
+.bear-3 { background-position-y: -233px; }
+.bear-5 { background-position-y: -352px; }
+
+.project-section {
+  --project: #ff8fc2;
+  --soft: #ffe2ef;
+  display: grid;
+  grid-template-columns: minmax(310px, .72fr) minmax(0, 1.42fr);
+  gap: clamp(36px, 6vw, 92px);
+  min-height: 100svh;
+  padding: 110px clamp(24px, 5vw, 76px) 120px;
+  border-top: 1px dashed rgba(23, 33, 42, .2);
+  scroll-margin-top: 66px;
+}
+.project-copy {
+  position: relative;
+  align-self: start;
+  padding: 42px 23px 22px;
+  border: 2px solid var(--project);
+  border-radius: 6px;
+  background: var(--soft);
+  box-shadow: 9px 10px 0 color-mix(in srgb, var(--project) 46%, rgba(23,33,42,.18));
+}
+.project-copy p {
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-ideograph;
+  overflow-wrap: anywhere;
+}
+#project-01 {
+  min-height: auto;
+  padding-top: 78px;
+  padding-bottom: 78px;
+}
+#project-01 .project-copy { padding-top: 34px; padding-bottom: 16px; }
+#project-01 .summary { margin-block: 11px; line-height: 1.45; }
+#project-01 .note-block > div { padding: 8px 10px; }
+#project-01 .note-block p { margin-top: 4px; line-height: 1.35; }
+#project-01 .role-line { margin-top: 8px; padding-top: 8px; }
+#project-01 .flow-list { margin-top: 8px; }
+#project-01 .flow-list ol { margin-top: 6px; }
+#project-01 .temu-title-cn { display: inline-block; white-space: nowrap; font-size: .78em; line-height: 1; }
+.project-headline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 110px;
+  align-items: start;
+  gap: 12px;
+}
+.project-headline .bear-sprite {
+  width: 110px;
+  height: 115px;
+  margin: -18px 0 0;
+  background-size: 245px 490px;
+  flex: none;
+}
+.project-headline .bear-1 { background-position-y: -8px; }
+.project-headline .bear-2 { background-position-y: -120px; }
+.project-headline .bear-3 { background-position-y: -233px; }
+.project-headline .bear-5 { background-position-y: -352px; }
+.step-sticker {
+  position: absolute;
+  left: -24px;
+  top: -32px;
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 69px;
+  border-radius: 55% 45% 48% 52%;
+  background: var(--pink);
+  color: #9f0e57;
+  box-shadow: -7px 8px 0 var(--pink-dark);
+  transform: rotate(-10deg);
+  font-family: "Comic Sans MS", cursive;
+  line-height: 1;
+}
+.step-sticker span { font-size: 11px; font-weight: 800; }
+.step-sticker b { font-size: 18px; }
+.project-section .step-sticker b { font-size: 31px; font-weight: 800; line-height: 1; }
+.eyebrow { margin: 0 0 10px; font-size: 10px; font-weight: 800; letter-spacing: .16em; }
+.project-copy h2 { margin: 0; font-family: "Comic Sans MS", "Kaiti SC", cursive; font-size: clamp(34px, 3.5vw, 52px); font-weight: 700; line-height: 1.05; letter-spacing: -.04em; }
+.category { display: inline-block; margin: 10px 0 0; padding: 5px 8px; border: 1px solid var(--project); border-radius: 4px; background: rgba(255,255,255,.5); font-size: 10px; font-weight: 800; }
+.summary { margin: 16px 0; font-size: 14px; line-height: 1.58; }
+.note-block { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.note-block > div { padding: 11px; border: 1px solid color-mix(in srgb, var(--project) 76%, #17212a); border-radius: 4px; background: rgba(255,255,255,.52); }
+.note-block b, .role-line span, .flow-list > span { font-family: "Comic Sans MS", "Kaiti SC", cursive; font-size: 13px; }
+.note-block p, .role-line p { margin: 6px 0 0; color: #35444f; font-size: 11px; line-height: 1.48; }
+.role-line { margin-top: 12px; padding-top: 11px; border-top: 1px dashed rgba(23,33,42,.26); }
+.source-note { margin-top: 12px; padding: 11px; border: 1px solid color-mix(in srgb, var(--project) 76%, #17212a); border-radius: 4px; background: rgba(255,255,255,.52); }
+.source-note-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.source-note-head span { font-family: "Comic Sans MS", "Kaiti SC", cursive; font-size: 13px; }
+.source-note-head a { color: inherit; font-size: 9px; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+.source-note p { margin: 6px 0 0; color: #35444f; font-size: 10px; line-height: 1.46; }
+.source-note .rights-link { display: inline-block; margin-top: 7px; color: inherit; font-size: 9px; font-weight: 800; }
+.flow-list { margin-top: 12px; }
+.flow-list ol { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0 0; padding: 0; list-style: none; }
+.flow-list li { display: flex; align-items: center; gap: 5px; padding: 5px 7px; border: 1px solid rgba(23,33,42,.2); border-radius: 99px; background: rgba(255,255,255,.46); font-size: 9px; }
+.flow-list i { display: grid; place-items: center; width: 17px; height: 17px; border-radius: 50%; background: var(--project); font-style: normal; font-weight: 800; }
+
+.carousel-board {
+  min-width: 0;
+  align-self: start;
+  position: sticky;
+  top: 92px;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 14px 12px;
+  border: 1px solid rgba(23,33,42,.12);
+  border-radius: 5px;
+  background: var(--paper);
+  box-shadow: 10px 12px 0 rgba(23,33,42,.07);
+}
+.main-carousel { flex: 1; min-height: 360px; }
+.main-carousel [data-slot='carousel-content'],
+.main-carousel [data-slot='carousel-content'] > div,
+.main-carousel [data-slot='carousel-item'] { height: 100%; }
+.carousel-board [data-slot='carousel-content'] > div { margin-left: 0; }
+.carousel-board [data-slot='carousel-item'] { padding-left: 0; }
+.slide-paper {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(23,33,42,.09);
+  background: color-mix(in srgb, var(--soft) 62%, white);
+}
+.slide-paper img { width: 100%; height: 100%; object-fit: scale-down; object-position: center; filter: drop-shadow(0 12px 15px rgba(23,33,42,.08)); }
+.carousel-board [data-slot='carousel-previous'],
+.carousel-board [data-slot='carousel-next'] {
+  z-index: 9;
+  width: 48px;
+  height: 48px;
+  inset-block: 0;
+  margin-block: auto;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.carousel-board [data-slot='carousel-previous'] { left: 18px; right: auto; }
+.carousel-board [data-slot='carousel-next'] { right: 18px; left: auto; }
+.carousel-board [data-slot='carousel-previous']:hover,
+.carousel-board [data-slot='carousel-next']:hover { background: var(--project); }
+.slide-caption { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; min-height: 67px; padding: 14px 3px 12px; border-bottom: 1px dashed rgba(23,33,42,.22); }
+.slide-caption p { max-width: 640px; margin: 0; font-size: 12px; line-height: 1.6; }
+.slide-caption span { flex: none; color: color-mix(in srgb, var(--project) 60%, #17212a); font-family: "Comic Sans MS", cursive; font-size: 12px; font-weight: 800; }
+.thumb-row { display: flex; gap: 8px; padding-top: 11px; overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--project) transparent; }
+.thumb { flex: 0 0 70px; height: 50px; padding: 3px; overflow: hidden; border: 2px solid transparent; border-radius: 3px; background: transparent; opacity: .42; cursor: pointer; }
+.thumb:hover { opacity: .8; }
+.thumb.active { border-color: var(--project); opacity: 1; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.about-section {
+  display: block;
+  padding: 130px clamp(24px, 8vw, 120px);
+  border-top: 1px dashed rgba(23,33,42,.22);
+  text-align: center;
+}
+.about-section h2 { margin: 0; font-family: 'Raw Notice', 'Comic Sans MS', cursive; font-size: clamp(48px, 7vw, 96px); font-weight: 400; line-height: .95; }
+footer { display: flex; justify-content: space-between; gap: 30px; padding: 30px clamp(24px, 5vw, 76px); border-top: 1px solid rgba(23,33,42,.14); font-size: 10px; font-weight: 800; letter-spacing: .12em; }
+
+@media (max-width: 1050px) {
+  .intro { grid-template-columns: 1fr; }
+  .how-card { max-width: 500px; }
+  .project-section { grid-template-columns: 1fr; }
+  .project-copy { max-width: 760px; }
+  .carousel-board { position: relative; top: auto; }
+}
+
+@media (max-width: 760px) {
+  .topbar { height: 62px; }
+  .intro { padding-top: 55px; }
+  .intro-main h1 { font-size: clamp(52px, 16vw, 78px); }
+  .project-picks a { grid-template-columns: 106px 36px 1fr 20px; gap: 12px; min-height: 122px; padding-right: 14px; }
+  .project-picks small { display: none; }
+  .project-picks strong { font-size: 24px; }
+  .project-picks a > span { width: 34px; height: 34px; }
+  .bear-sprite { width: 104px; height: 110px; background-size: 884px 794px; }
+  .bear-1 { background-position: -68px -223px; }
+  .bear-2 { background-position: -231px -223px; }
+  .bear-3 { background-position: -380px -223px; }
+  .bear-5 { background-position: -674px -223px; }
+  .project-section { padding-top: 90px; padding-bottom: 90px; scroll-margin-top: 60px; }
+  .project-copy { padding: 42px 20px 22px; }
+  .note-block { grid-template-columns: 1fr; }
+  .step-sticker { left: -12px; }
+  .main-carousel { min-height: 300px; }
+  .carousel-board [data-slot='carousel-previous'],
+  .carousel-board [data-slot='carousel-next'] { width: 42px; height: 42px; box-shadow: 3px 3px 0 var(--ink); }
+  .carousel-board [data-slot='carousel-previous'] { left: 10px; }
+  .carousel-board [data-slot='carousel-next'] { right: 10px; }
+  .about-section { grid-template-columns: 1fr; gap: 35px; }
+}
+
+@media (max-width: 430px) {
+  .logo { letter-spacing: .08em; }
+  .topbar nav { gap: 18px; }
+  .project-picks a { grid-template-columns: 90px 1fr 20px; }
+  .project-picks a > span { display: none; }
+  .bear-sprite { transform: translateX(-7px); }
+  .project-copy h2 { font-size: 44px; }
+  .main-carousel { min-height: 270px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+.static-carousel { position: sticky; display:flex; flex-direction:column; }
+.static-slide { position:relative; display:none; flex:1; min-height:0; place-items:center; overflow:hidden; border:1px solid rgba(23,33,42,.09); background:color-mix(in srgb,var(--soft) 62%,white); }
+.static-slide.active { display:grid; }
+.static-slide img { position:absolute; left:50%; top:50%; width:auto; height:auto; max-width:100%; max-height:100%; transform:translate(-50%,-50%); object-fit:contain; filter:drop-shadow(0 12px 15px rgba(23,33,42,.08)); cursor:zoom-in; }
+.static-arrow { position:absolute; z-index:9; top:42%; width:48px; height:48px; border:2px solid var(--ink); border-radius:50%; background:var(--paper); color:var(--ink); box-shadow:4px 4px 0 var(--ink); cursor:pointer; font-size:20px; }
+.static-arrow:hover { background:var(--project); }
+.static-arrow.prev { left:30px; }
+.static-arrow.next { right:30px; }
+.project-picks a > b { font-size:20px; }
+@media(max-width:760px){.static-arrow{width:42px;height:42px}.static-arrow.prev{left:24px}.static-arrow.next{right:24px}}
+.image-lightbox { position:fixed; z-index:9999; inset:0; display:none; place-items:center; padding:28px; background:rgba(14,21,27,.9); backdrop-filter:blur(8px); }
+.image-lightbox.open { display:grid; }
+.image-lightbox figure { display:grid; grid-template-rows:minmax(0,1fr) auto; gap:12px; width:100%; height:100%; margin:0; place-items:center; }
+.image-lightbox img { display:block; width:auto; height:auto; max-width:94vw; max-height:88vh; object-fit:contain; border-radius:4px; box-shadow:0 24px 70px rgba(0,0,0,.36); }
+.image-lightbox figcaption { max-width:860px; color:#fff; font-size:13px; line-height:1.5; text-align:center; }
+.lightbox-nav { position:fixed; z-index:2; top:50%; display:grid; place-items:center; width:56px; height:56px; border:2px solid #17212a; border-radius:50%; background:#fffdf8; color:#17212a; box-shadow:5px 5px 0 #17212a; cursor:pointer; font-size:25px; transform:translateY(-50%); }
+.lightbox-nav:hover { background:#d9ff52; }
+.lightbox-nav:disabled { opacity:.3; cursor:default; }
+.lightbox-prev { left:28px; }
+.lightbox-next { right:28px; }
+.lightbox-close { position:fixed; z-index:2; top:24px; right:26px; display:grid; place-items:center; width:48px; height:48px; border:2px solid #17212a; border-radius:50%; background:#fffdf8; color:#17212a; box-shadow:4px 4px 0 #17212a; cursor:pointer; font-size:26px; line-height:1; }
+.lightbox-close:hover { background:#d9ff52; }
+body.lightbox-open { overflow:hidden; }
+@media(max-width:760px){.image-lightbox{padding:16px 10px}.image-lightbox img{max-width:96vw;max-height:82vh}.lightbox-close{top:14px;right:14px;width:44px;height:44px}.lightbox-nav{top:auto;bottom:20px;width:46px;height:46px;transform:none}.lightbox-prev{left:calc(50% - 58px)}.lightbox-next{right:calc(50% - 58px)}}
+@font-face { font-family: 'Raw Notice'; src: url('assets/raw-notice.ttf') format('truetype'); font-display: swap; }
+</style></head><body><main id="top">
+<header class="topbar"><a href="#top" class="logo">✦ AI PROJECTS</a><nav><a href="#project-01">项目</a><a href="#about">关于</a></nav></header>
+<section class="project-section" id="project-01" style="--project:#9c82ef;--soft:#e8dfff">
+<div class="project-copy"><div class="step-sticker"><b>01</b></div><div class="project-headline"><div><h2>TEMU<br><span class="temu-title-cn">智能选品助手</span></h2><p class="category">跨境选品工作台</p></div><div class="bear-sprite bear-2" role="img" aria-label="第 2 只小熊"></div></div><p class="summary">面向跨境选品人员，将 TEMU 商品、用户评论、1688 供应商与利润信息，整合为从机会发现到采购判断的一条工作流。</p><div class="note-block"><div><b>项目背景</b><p>一个选品决策，往往要经过Temu前端找趋势、评论区验需求、1688找货源。商品机会、用户需求与采购成本无法在同一处比较，判断过程依赖经验，也难以回溯。</p></div><div><b>设计目标</b><p>将采集、筛选、评论洞察、同款匹配和利润评估串成连续流程；保留数据来源、筛选规则和匹配置信度，让 AI 建议可以被理解和复核。</p></div></div><div class="role-line"><span>我的工作与产出</span><p>梳理跨平台选品流程、规划功能架构，并完成覆盖任务编排、评论洞察、货源匹配与利润评估的高保真产品原型。</p></div><div class="flow-list"><span>关键设计</span><ol><li><i>1</i>可解释筛选</li><li><i>2</i>洞察有依据</li><li><i>3</i>匹配可判断</li><li><i>4</i>利润闭环</li></ol></div></div>
+      <div class="carousel-board static-carousel"><div class="static-slide active" data-caption="任务编排｜按关键词、站点和时间批量创建采集任务，减少重复操作"><img src="assets/temu-01.webp" alt="TEMU 智能选品助手：任务编排｜按关键词、站点和时间批量创建采集任务，减少重复操作"></div><div class="static-slide" data-caption="商品候选池｜集中保留商品来源、销量和原始链接，让后续判断可以回溯"><img src="assets/temu-02.webp" alt="TEMU 智能选品助手：商品候选池｜集中保留商品来源、销量和原始链接，让后续判断可以回溯"></div><div class="static-slide" data-caption="规则筛选｜先用可解释条件缩小候选范围，再由 AI 处理难以结构化的信息"><img src="assets/temu-04.webp" alt="TEMU 智能选品助手：规则筛选｜先用可解释条件缩小候选范围，再由 AI 处理难以结构化的信息"></div><div class="static-slide" data-caption="评论洞察｜从原始评论中提取用户需求、产品痛点和潜在风险，并保留判断依据"><img src="assets/temu-05.webp" alt="TEMU 智能选品助手：评论洞察｜从原始评论中提取用户需求、产品痛点和潜在风险，并保留判断依据"></div><div class="static-slide" data-caption="1688 货源搜索｜将入围商品连接到供应链信息，进入采购和成本判断"><img src="assets/temu-06.webp" alt="TEMU 智能选品助手：1688 货源搜索｜将入围商品连接到供应链信息，进入采购和成本判断"></div><div class="static-slide" data-caption="同款识别｜比较图片相似度、匹配置信度和供应商差异，帮助用户复核结果"><img src="assets/temu-07.webp" alt="TEMU 智能选品助手：同款识别｜比较图片相似度、匹配置信度和供应商差异，帮助用户复核结果"></div><div class="static-slide" data-caption="利润评估｜综合售价、采购成本和市场信号，将分析转化为最终选品决策"><img src="assets/temu-08.webp" alt="TEMU 智能选品助手：利润评估｜综合售价、采购成本和市场信号，将分析转化为最终选品决策"></div><button class="static-arrow prev" aria-label="上一张">←</button><button class="static-arrow next" aria-label="下一张">→</button><div class="slide-caption"><p>任务编排｜按关键词、站点和时间批量创建采集任务，减少重复操作</p><span>01 / 07</span></div><div class="thumb-row"><button class="thumb active" data-index="0" aria-label="查看第 1 张"><img src="assets/thumb-temu-01.webp" alt=""></button><button class="thumb" data-index="1" aria-label="查看第 2 张"><img src="assets/thumb-temu-02.webp" alt=""></button><button class="thumb" data-index="2" aria-label="查看第 3 张"><img src="assets/thumb-temu-04.webp" alt=""></button><button class="thumb" data-index="3" aria-label="查看第 4 张"><img src="assets/thumb-temu-05.webp" alt=""></button><button class="thumb" data-index="4" aria-label="查看第 5 张"><img src="assets/thumb-temu-06.webp" alt=""></button><button class="thumb" data-index="5" aria-label="查看第 6 张"><img src="assets/thumb-temu-07.webp" alt=""></button><button class="thumb" data-index="6" aria-label="查看第 7 张"><img src="assets/thumb-temu-08.webp" alt=""></button></div></div>
+    </section><section class="project-section" id="project-02" style="--project:#ff8fa7;--soft:#ffdce5">
+      <div class="project-copy"><div class="step-sticker"><b>02</b></div><div class="project-headline"><div><p class="eyebrow">READ, THINK & CONVERSE</p><h2>藏围</h2><p class="category">AI 多角色围读产品</p></div><div class="bear-sprite bear-1" role="img" aria-label="第 1 只小熊"></div></div><p class="summary">面向希望继续思考而不只记录书摘的读者，让用户围绕一本书提出问题，由不同立场的 AI 角色依据原文展开讨论，并形成可回看的围读纪要。</p><div class="note-block"><div><b>项目背景</b><p>多数阅读产品停留在书籍收藏、笔记和摘抄。读完后产生的问题缺少继续讨论的空间，单一 AI 对话也容易得到概括性的标准答案。</p></div><div><b>设计目标</b><p>把书籍、问题、角色和原文依据组织成一场可以持续追踪的围读，让不同观点清晰区分，并把长对话沉淀为共识、分歧和后续问题。</p></div></div><div class="role-line"><span>我的工作与产出</span><p>梳理从个人书架到发起围读的完整流程，设计 AI 角色机制、讨论界面和总结结构，并完成多角色讨论与纪要导出的高保真产品原型。</p></div><div class="flow-list"><span>关键设计</span><ol><li><i>1</i>问题驱动</li><li><i>2</i>多角色观点</li><li><i>3</i>原文有依据</li><li><i>4</i>讨论可沉淀</li></ol></div></div>
+      <div class="carousel-board static-carousel"><div class="static-slide active" data-caption="我的阅读空间｜用书封组成个人书墙，让阅读记录成为进入围读的起点"><img src="assets/reading-01.webp" alt="藏围：我的阅读空间｜用书封组成个人书墙，让阅读记录成为进入围读的起点"></div><div class="static-slide" data-caption="个人书架｜集中管理已经上传和阅读过的书籍"><img src="assets/reading-02.webp" alt="藏围：个人书架｜集中管理已经上传和阅读过的书籍"></div><div class="static-slide" data-caption="快速检索｜通过搜索找回想继续阅读或讨论的书"><img src="assets/reading-03.webp" alt="藏围：快速检索｜通过搜索找回想继续阅读或讨论的书"></div><div class="static-slide" data-caption="书籍上下文｜集中呈现书封、简介、摘录和阅读信息，为讨论建立背景"><img src="assets/reading-04.webp" alt="藏围：书籍上下文｜集中呈现书封、简介、摘录和阅读信息，为讨论建立背景"></div><div class="static-slide" data-caption="内容氛围｜延续原书的视觉气质，在功能之外保留阅读感受"><img src="assets/reading-05.webp" alt="藏围：内容氛围｜延续原书的视觉气质，在功能之外保留阅读感受"></div><div class="static-slide" data-caption="发起围读｜从一本书进入讨论，明确当前讨论所依据的内容范围"><img src="assets/reading-06.webp" alt="藏围：发起围读｜从一本书进入讨论，明确当前讨论所依据的内容范围"></div><div class="static-slide" data-caption="提出问题｜设定讨论主题和关注方向，把主动权保留给读者"><img src="assets/reading-07.webp" alt="藏围：提出问题｜设定讨论主题和关注方向，把主动权保留给读者"></div><div class="static-slide" data-caption="多角色回应｜不同立场的 AI 角色依次发言，呈现同一问题的多个角度"><img src="assets/reading-08.webp" alt="藏围：多角色回应｜不同立场的 AI 角色依次发言，呈现同一问题的多个角度"></div><div class="static-slide" data-caption="讨论总结与导出｜梳理共识、分歧、原文依据和后续问题，并保存完整围读纪要"><img src="assets/reading-summary-final.png" alt="藏围：讨论总结与导出"></div><div class="static-slide" data-caption="讨论结论｜保留尚未解决的问题、核心结论与后续阅读建议"><img src="assets/reading-conclusion-final.png" alt="藏围：讨论结论与后续阅读建议"></div><div class="static-slide" data-caption="导出围读纪要｜保存完整讨论和结构化总结，方便之后回顾"><img src="assets/reading-12.webp" alt="藏围：导出围读纪要｜保存完整讨论和结构化总结，方便之后回顾"></div><button class="static-arrow prev" aria-label="上一张">←</button><button class="static-arrow next" aria-label="下一张">→</button><div class="slide-caption"><p>我的阅读空间｜用书封组成个人书墙，让阅读记录成为进入围读的起点</p><span>01 / 11</span></div><div class="thumb-row"><button class="thumb active" data-index="0" aria-label="查看第 1 张"><img src="assets/thumb-reading-01.webp" alt=""></button><button class="thumb" data-index="1" aria-label="查看第 2 张"><img src="assets/thumb-reading-02.webp" alt=""></button><button class="thumb" data-index="2" aria-label="查看第 3 张"><img src="assets/thumb-reading-03.webp" alt=""></button><button class="thumb" data-index="3" aria-label="查看第 4 张"><img src="assets/thumb-reading-04.webp" alt=""></button><button class="thumb" data-index="4" aria-label="查看第 5 张"><img src="assets/thumb-reading-05.webp" alt=""></button><button class="thumb" data-index="5" aria-label="查看第 6 张"><img src="assets/thumb-reading-06.webp" alt=""></button><button class="thumb" data-index="6" aria-label="查看第 7 张"><img src="assets/thumb-reading-07.webp" alt=""></button><button class="thumb" data-index="7" aria-label="查看第 8 张"><img src="assets/thumb-reading-08.webp" alt=""></button><button class="thumb" data-index="8" aria-label="查看第 9 张"><img src="assets/reading-summary-final.png" alt=""></button><button class="thumb" data-index="9" aria-label="查看第 10 张"><img src="assets/reading-conclusion-final.png" alt=""></button><button class="thumb" data-index="10" aria-label="查看第 11 张"><img src="assets/thumb-reading-12.webp" alt=""></button></div></div>
+    </section><section class="project-section" id="project-03" style="--project:#ffb06d;--soft:#ffe2c8">
+      <div class="project-copy"><div class="step-sticker"><b>03</b></div><div class="project-headline"><div><p class="eyebrow">PERSONALIZED CERAMICS</p><h2>Sweet Moment</h2><p class="category">个性化陶瓷品牌独立站</p></div><div class="bear-sprite bear-3" role="img" aria-label="第 3 只小熊"></div></div><p class="summary">面向购买纪念礼物的用户，建立从纪念场景发现、商品比较、个性化配置到购买决策的完整电商体验。</p><div class="note-block"><div><b>项目背景</b><p>定制陶瓷既要传达手绘产品的情感价值，也要承载姓名、日期和祝福语等复杂信息。用户需要确认定制内容正确，最终效果也符合预期。</p></div><div><b>设计目标</b><p>通过场景化商品导航、清晰的款式比较和结构化定制信息降低选择成本，并利用真实产品图片建立对手作质量与定制结果的信任。</p></div></div><div class="role-line"><span>我的工作与产出</span><p>梳理商品发现与购买路径，规划电商信息架构，设计首页、商品分类和定制详情页面，并完成关键购买流程的高保真界面原型。</p></div><div class="flow-list"><span>关键设计</span><ol><li><i>1</i>场景化发现</li><li><i>2</i>款式可比较</li><li><i>3</i>定制更清晰</li><li><i>4</i>实拍建立信任</li></ol></div></div>
+      <div class="carousel-board static-carousel"><div class="static-slide active" data-caption="场景化首页｜以婚礼、生日和纪念日组织商品入口，让用户从送礼场景快速开始选择"><img src="assets/sweet-01.webp" alt="Sweet Moment：场景化首页｜以婚礼、生日和纪念日组织商品入口，让用户从送礼场景快速开始选择"></div><div class="static-slide" data-caption="商品分类与比较｜集中呈现不同杯型、款式和手绘风格，帮助用户理解商品差异"><img src="assets/sweet-02.webp" alt="Sweet Moment：商品分类与比较｜集中呈现不同杯型、款式和手绘风格，帮助用户理解商品差异"></div><div class="static-slide" data-caption="定制商品详情｜将实拍图片、商品信息和个性化填写区域并置，边确认效果边完成定制"><img src="assets/sweet-03.webp" alt="Sweet Moment：定制商品详情｜将实拍图片、商品信息和个性化填写区域并置，边确认效果边完成定制"></div><button class="static-arrow prev" aria-label="上一张">←</button><button class="static-arrow next" aria-label="下一张">→</button><div class="slide-caption"><p>场景化首页｜以婚礼、生日和纪念日组织商品入口，让用户从送礼场景快速开始选择</p><span>01 / 03</span></div><div class="thumb-row"><button class="thumb active" data-index="0" aria-label="查看第 1 张"><img src="assets/thumb-sweet-01.webp" alt=""></button><button class="thumb" data-index="1" aria-label="查看第 2 张"><img src="assets/thumb-sweet-02.webp" alt=""></button><button class="thumb" data-index="2" aria-label="查看第 3 张"><img src="assets/thumb-sweet-03.webp" alt=""></button></div></div>
+    </section><section class="project-section" id="project-04" style="--project:#75cbd0;--soft:#cef0f2">
+<div class="project-copy"><div class="step-sticker"><b>04</b></div><div class="project-headline"><div><p class="eyebrow">EDITORIAL CALENDAR</p><h2>我中签了</h2><p class="category">文学书摘 × PUBLIC DOMAIN ART</p></div><div class="bear-sprite bear-5" role="img" aria-label="第 5 只小熊"></div></div><p class="summary">随机抽取文学书摘与 PUBLIC DOMAIN ART，生成每个人不同的今日宜忌与可分享日签。</p><div class="note-block"><div><b>项目背景</b><p>普通打卡只留下数字，书摘也容易被遗忘，缺少每日惊喜和长期收藏。</p></div><div><b>设计目标</b><p>随机组合书摘、艺术作品与今日宜忌，通过抽卡生成可收藏、可分享的日签。</p></div></div><div class="role-line"><span>我的工作与产出</span><p>独立负责产品概念、内容机制与视觉落地。设计抽卡与今日宜忌规则，建立 PUBLIC DOMAIN ART 来源档案，完成日签生成、分享、收藏及自适应版式的高保真方案。</p></div><div class="source-note"><div class="source-note-head"><span>ART SOURCE &amp; RIGHTS</span><a href="https://publicdomainreview.org/about/" target="_blank" rel="noopener">The Public Domain Review ↗</a></div><p>The Public Domain Review 是策展公共领域作品的非营利期刊。项目回溯原馆藏，记录作者、年代、来源和原作与数字副本的权利；网站文章与设计不随作品进入公共领域。</p><a class="rights-link" href="https://publicdomainreview.org/rights-labelling-on-our-site" target="_blank" rel="noopener">查看官方权利标注说明 ↗</a></div><div class="flow-list"><span>核心机制</span><ol><li><i>1</i>抽卡有惊喜</li><li><i>2</i>今日有宜忌</li><li><i>3</i>来源可追溯</li><li><i>4</i>分享可传播</li></ol></div></div>
+      <div class="carousel-board static-carousel"><div class="static-slide active" data-caption="首页抽卡｜日期、今日宜忌、版画与书摘组成每天的揭签入口"><img src="assets/poster-home-final.png" alt="我中签了：首页日签"></div><div class="static-slide" data-caption="抽卡结果与版式｜不同内容组合根据图片比例与文字长度，自适应切换六种日签布局"><img src="assets/poster-layouts-final.png" alt="我中签了：自适应版式探索"></div><button class="static-arrow prev" aria-label="上一张">←</button><button class="static-arrow next" aria-label="下一张">→</button><div class="slide-caption"><p>首页抽卡｜日期、今日宜忌、版画与书摘组成每天的揭签入口</p><span>01 / 02</span></div><div class="thumb-row"><button class="thumb active" data-index="0" aria-label="查看第 1 张"><img src="assets/poster-home-final.png" alt=""></button><button class="thumb" data-index="1" aria-label="查看第 2 张"><img src="assets/poster-layouts-final.png" alt=""></button></div></div>
+    </section>
+<section class="about-section" id="about"><h2>Never stop thinking.</h2></section><footer><span>AI PROJECTS · 2026</span><a href="#top">BACK TO TOP ↑</a></footer></main>
+<div class="image-lightbox" id="image-lightbox" role="dialog" aria-modal="true" aria-label="放大查看项目截图" aria-hidden="true"><button class="lightbox-close" type="button" aria-label="关闭大图">×</button><button class="lightbox-nav lightbox-prev" type="button" aria-label="上一张">←</button><figure><img src="" alt=""><figcaption></figcaption></figure><button class="lightbox-nav lightbox-next" type="button" aria-label="下一张">→</button></div>
+<script>document.querySelectorAll('.static-carousel').forEach(function(carousel){var slides=[...carousel.querySelectorAll('.static-slide')];var thumbs=[...carousel.querySelectorAll('.thumb')];var current=0;var caption=carousel.querySelector('.slide-caption p');var count=carousel.querySelector('.slide-caption span');var copy=carousel.parentElement.querySelector('.project-copy');function sync(){carousel.style.height=Math.round(copy.getBoundingClientRect().height)+'px';}function show(next){current=(next+slides.length)%slides.length;slides.forEach((s,i)=>s.classList.toggle('active',i===current));thumbs.forEach((t,i)=>t.classList.toggle('active',i===current));caption.textContent=slides[current].dataset.caption;count.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');thumbs[current].scrollIntoView({block:'nearest',inline:'nearest'});}sync();new ResizeObserver(sync).observe(copy);window.addEventListener('resize',sync);carousel.querySelector('.prev').addEventListener('click',()=>show(current-1));carousel.querySelector('.next').addEventListener('click',()=>show(current+1));thumbs.forEach((t,i)=>t.addEventListener('click',()=>show(i)));carousel.tabIndex=0;carousel.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();show(current-1)}if(e.key==='ArrowRight'){e.preventDefault();show(current+1)}});});</script>
+<script>(function(){var lightbox=document.getElementById('image-lightbox');var lightboxImage=lightbox.querySelector('img');var lightboxCaption=lightbox.querySelector('figcaption');var closeButton=lightbox.querySelector('.lightbox-close');var prevButton=lightbox.querySelector('.lightbox-prev');var nextButton=lightbox.querySelector('.lightbox-next');var figure=lightbox.querySelector('figure');var lastTrigger=null;var gallery=[];var galleryIndex=0;function renderLightbox(){var trigger=gallery[galleryIndex];lightboxImage.src=trigger.currentSrc||trigger.src;lightboxImage.alt=trigger.alt||'项目截图';lightboxCaption.textContent=trigger.closest('.static-slide').dataset.caption||trigger.alt||'';var onlyOne=gallery.length<2;prevButton.disabled=onlyOne;nextButton.disabled=onlyOne;}function stepLightbox(direction){if(gallery.length<2)return;galleryIndex=(galleryIndex+direction+gallery.length)%gallery.length;renderLightbox();}function openLightbox(trigger){lastTrigger=trigger;gallery=[...trigger.closest('.static-carousel').querySelectorAll('.static-slide img')];galleryIndex=gallery.indexOf(trigger);renderLightbox();lightbox.classList.add('open');lightbox.setAttribute('aria-hidden','false');document.body.classList.add('lightbox-open');closeButton.focus();}function closeLightbox(){lightbox.classList.remove('open');lightbox.setAttribute('aria-hidden','true');document.body.classList.remove('lightbox-open');lightboxImage.src='';if(lastTrigger)lastTrigger.focus();}document.querySelectorAll('.static-slide img').forEach(function(trigger){trigger.tabIndex=0;trigger.setAttribute('role','button');trigger.setAttribute('aria-label','点击放大：'+(trigger.alt||'项目截图'));trigger.addEventListener('click',function(){openLightbox(trigger)});trigger.addEventListener('keydown',function(event){if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(trigger)}});});prevButton.addEventListener('click',function(){stepLightbox(-1)});nextButton.addEventListener('click',function(){stepLightbox(1)});closeButton.addEventListener('click',closeLightbox);lightbox.addEventListener('click',function(event){if(event.target===lightbox||event.target===figure)closeLightbox();});document.addEventListener('keydown',function(event){if(!lightbox.classList.contains('open'))return;if(event.key==='Escape')closeLightbox();if(event.key==='ArrowLeft'){event.preventDefault();stepLightbox(-1)}if(event.key==='ArrowRight'){event.preventDefault();stepLightbox(1)}});})();</script></body></html>
