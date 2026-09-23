@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Brandy Melville App 产品分析报告：品牌审美、外部种草溯源与购物决策的体验评估。">
+  <meta name="theme-color" content="#F7F4F0">
+  <title>Brandy Melville App 产品分析</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23F7F4F0'/%3E%3Ctext x='20' y='29' text-anchor='middle' font-family='Georgia' font-size='28' fill='%23222222'%3Eb%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/report.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap">
+  <style>
+    :root { color-scheme: light; --font-heading:Georgia,"Songti SC","STSong","SimSun",serif; --font-body:Inter,"PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    body { margin:0; background:#F7F4F0; color:#222222; font-family:var(--font-body); font-size:16px; line-height:1.95; -webkit-font-smoothing:antialiased; }
+    h1,h2,h3,.serif { font-family:var(--font-heading); font-weight:400; }
+    button,input,select,textarea { font-family:var(--font-body); }
+    p { margin:0 0 1.1em; } p:last-child { margin-bottom:0; }
+    a { color:inherit; } a:focus-visible { outline:2px solid #555555; outline-offset:5px; }
+    strong { font-weight:600; color:#222222; }
+    .section { padding-top:80px; padding-bottom:12px; scroll-margin-top:32px; }
+    .section-title { border-top:1px solid #9E8B7E; padding-top:25px; margin-bottom:42px; }
+    .section-title h2 { font-size:clamp(26px,3vw,35px); line-height:1.5; }
+    .eyebrow { font-size:12px; letter-spacing:.18em; text-transform:uppercase; }
+    .label { display:block; margin-bottom:10px; color:#9E8B7E; font-size:14px; font-weight:500; letter-spacing:.08em; }
+    .entry { border-top:1px solid #DCD6CD; padding:36px 0; }
+    .entry:first-child { border-top:0; padding-top:0; }
+    .entry-title { font-size:clamp(24px,2.5vw,30px); line-height:1.6; }
+    .copy { color:#555555; }
+    .field { padding:22px 0; border-bottom:1px solid #DCD6CD; }
+    .field:last-child { border-bottom:0; padding-bottom:0; }
+    .field:first-child { padding-top:0; }
+    .solutions { list-style:decimal; padding-left:1.3em; }
+    .solutions li { margin:0 0 12px; padding-left:5px; }
+    .metrics { display:flex; flex-wrap:wrap; gap:8px 22px; font-size:14px; color:#555555; }
+    .metrics span { border-bottom:1px solid #DCD6CD; padding-bottom:4px; }
+    .app-logo { position:relative; isolation:isolate; }
+    .app-logo::after { content:""; position:absolute; z-index:-1; pointer-events:none; left:12%; right:12%; bottom:-12px; height:24%; border-radius:50%; background:rgba(222,177,168,.5); filter:blur(24px); }
+    .screen-gallery { max-width:320px; margin:28px auto 4px; }
+    .visual-entry { display:grid; grid-template-columns:minmax(0,1fr); gap:36px; align-items:start; }
+    .visual-entry > div { min-width:0; }
+    .visual-entry-heading { margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid #DCD6CD; }
+    .visual-entry-heading > .label { font-size:18px; font-weight:700; }
+    .visual-entry-heading .entry-title { margin:0; font-size:32px; font-weight:700; line-height:1.35; }
+    .visual-entry .screen-gallery { width:100%; max-width:270px; margin:0 auto; }
+    .visual-entry .field { padding:18px 0; }
+    .visual-entry .field:first-child { padding-top:0; }
+    .visual-entry .field:last-child { padding-bottom:0; }
+    @media(min-width:768px) {
+      .visual-entry { grid-template-columns:minmax(180px,.58fr) minmax(0,1.42fr); column-gap:32px; row-gap:20px; padding-bottom:20px; scroll-margin-top:16px; }
+      .visual-entry-heading { padding-bottom:12px; }
+      .visual-entry-heading > .label { margin-bottom:4px; }
+      .visual-entry-heading .entry-title { font-size:32px; font-weight:700; line-height:1.35; }
+      .visual-entry .screen-gallery { max-width:240px; width:min(100%,calc((100svh - 240px) * .462)); }
+      .visual-entry .screen-gallery figcaption { margin-top:6px; font-size:13px; line-height:1.5; }
+      .visual-entry .gallery-controls { margin-top:10px; gap:8px; }
+      .visual-entry .gallery-controls button { padding:5px 10px; }
+      .visual-entry .copy { font-size:16px; line-height:1.65; }
+      .visual-entry .field { padding:10px 0; }
+      .visual-entry .field:first-child { padding-top:0; }
+      .visual-entry .field:last-child { padding-bottom:0; }
+      .visual-entry .field .label { margin-bottom:5px; }
+      .visual-entry .field p { margin-bottom:8px; }
+      .visual-entry .field p:last-child { margin-bottom:0; }
+    }
+    .design-story { display:grid; gap:16px; color:#555555; font-size:16px; line-height:1.65; }
+    .design-story .label { margin-bottom:8px; }
+    .design-compare { display:grid; grid-template-columns:1fr 1fr; border:1px solid #DCD6CD; }
+    .design-compare > div { padding:14px 16px; min-width:0; }
+    .design-compare > div + div { border-left:1px solid #DCD6CD; background:#EAE3DA; }
+    .design-compare small { display:block; font-size:13px; margin-bottom:8px; }
+    .design-tags { display:flex; flex-wrap:wrap; gap:5px; }
+    .design-tags span { border:1px solid #DCD6CD; padding:2px 7px; font-size:13px; }
+    .design-focus { display:block; font-family:var(--font-heading); font-weight:400; font-size:24px; line-height:1.4; margin-bottom:5px; color:#222222; }
+    .design-compare p { margin:0; font-size:14px; }
+    .design-notes { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .design-notes > div { background:#EFE9E1; padding:14px 16px; }
+    .design-notes p { margin:0; }
+    .design-takeaway { border-left:2px solid #9E8B7E; padding-left:16px; }
+    .design-takeaway p { margin:0; }
+    .design-takeaway strong { display:block; font-family:var(--font-heading); font-weight:400; font-size:24px; line-height:1.4; margin-bottom:5px; }
+    .design-value { display:grid; grid-template-columns:auto repeat(3,1fr); align-items:center; gap:8px; border-top:1px solid #DCD6CD; padding-top:10px; font-size:14px; }
+    .design-value span { text-align:center; border-left:1px solid #DCD6CD; }
+    .return-flow { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); list-style:none; padding:0; margin:0; border:1px solid #DCD6CD; background:#EFE9E1; }
+    .return-flow li { position:relative; padding:14px 10px; text-align:center; }
+    .return-flow li + li { border-left:1px solid #DCD6CD; }
+    .return-flow li + li::before { content:'→'; position:absolute; left:-8px; top:27px; background:#EFE9E1; color:#555555; font-size:14px; }
+    .return-flow strong { display:block; font-size:16px; margin-bottom:4px; }
+    .return-flow span { font-size:13px; }
+    #newness-retention,#lightweight-checkout { margin-top:40px; padding-top:40px; }
+    #lightweight-checkout .design-story { gap:10px; }
+    #lightweight-checkout .design-compare > div,#lightweight-checkout .design-notes > div { padding:10px 14px; }
+    #lightweight-checkout .return-flow li { padding:9px 6px; }
+    #lightweight-checkout .visual-entry-heading { margin-bottom:12px; }
+    #lightweight-checkout .design-story .label { margin-bottom:5px; }
+    #lightweight-checkout .design-story { line-height:1.55; }
+    @media(min-width:768px) {
+      #newness-retention,#lightweight-checkout { margin-top:56px; padding-top:48px; }
+      #newness-retention .visual-entry-heading { margin-bottom:12px; padding-bottom:8px; }
+      #newness-retention .design-story { gap:10px; }
+      #newness-retention .design-story .label { margin-bottom:5px; }
+      #newness-retention .design-compare > div,#newness-retention .design-notes > div { padding:10px 14px; }
+      #newness-retention .return-flow li { padding:9px 6px; }
+      #newness-retention .design-value { padding-top:7px; }
+    }
+    @media(max-width:520px) { .design-compare,.design-notes { grid-template-columns:1fr; } .design-compare > div + div { border-left:0; border-top:1px solid #DCD6CD; } }
+    #understanding .copy { font-size:16px; line-height:1.9; }
+    #understanding aside .serif { font-size:22px; font-weight:400; }
+    .audience-pair { display:grid; grid-template-columns:1fr 1fr; gap:40px; margin:36px 0 40px; }
+    .audience-pair > div { border-top:1px solid #DCD6CD; padding-top:20px; }
+    .audience-pair h3 { font-size:24px; font-weight:400; color:#222222; margin:12px 0; }
+    .audience-pair p { margin:0; }
+    .audience-need { display:block; margin-top:16px; font-size:14px; color:#555555; }
+    .perspective-summary { max-width:640px; }
+    .perspective-summary p { margin:8px 0 0; }
+    .perspective-checks { display:flex; flex-wrap:wrap; gap:12px 28px; margin-top:28px; font-size:14px; color:#555555; }
+    @media(max-width:600px) { .audience-pair { grid-template-columns:1fr; gap:28px; } }
+    .screen-gallery figure { margin:0; min-width:0; }
+    #fit-confidence, #stock-recovery { margin-top:56px; padding-top:48px; }
+    #stock-recovery .design-story { gap:12px; line-height:1.5; }
+    #stock-recovery .design-compare > div, #stock-recovery .design-notes > div { padding:10px 14px; }
+    #stock-recovery .metrics { font-size:13px; gap:5px 16px; }
+    #fit-confidence .design-story { gap:10px; line-height:1.5; }
+    #fit-confidence .visual-entry-heading { margin-bottom:12px; }
+    #fit-confidence .design-story .label { margin-bottom:5px; }
+    #fit-confidence .design-compare > div,#fit-confidence .design-notes > div { padding:10px 14px; }
+    #fit-confidence .metrics { font-size:13px; gap:5px 16px; }
+    @media(min-width:768px) {
+      #fit-confidence .design-story { gap:7px; }
+      #fit-confidence .design-compare > div,#fit-confidence .design-notes > div { padding:6px 12px; }
+      #fit-confidence .visual-entry-heading { margin-bottom:8px; }
+      #fit-confidence .design-compare small { margin-bottom:4px; }
+      #fit-confidence .design-story .label { margin-bottom:3px; }
+    }
+    #search-discovery .design-story { gap:12px; line-height:1.55; }
+    #search-discovery .visual-entry-heading { margin-bottom:14px; }
+    #search-discovery .design-story .label { margin-bottom:5px; }
+    #search-discovery .design-compare > div,#search-discovery .design-notes > div { padding:10px 14px; }
+    .search-solutions { display:grid; grid-template-columns:1fr 1fr; gap:6px 20px; margin:0; padding:0; list-style:none; font-size:14px; }
+    .search-solutions li { border-top:1px solid #DCD6CD; padding-top:6px; }
+    .search-solutions strong { margin-right:6px; }
+    #search-discovery .metrics { font-size:13px; gap:5px 16px; }
+    @media(max-width:520px) { .search-solutions { grid-template-columns:1fr; } }
+    .screen-gallery figure[hidden] { display:none; }
+    .screen-gallery img { display:block; width:100%; height:auto; border:1px solid #DCD6CD; background:#EFE9E1; }
+    .screen-gallery figcaption { margin-top:10px; font-size:14px; line-height:1.7; color:#555555; }
+    .gallery-controls { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:20px; font-size:14px; }
+    .gallery-controls button { border:1px solid #DCD6CD; background:transparent; color:#222222; padding:7px 14px; cursor:pointer; }
+    .gallery-controls button:hover:not(:disabled) { background:#EAE3DA; }
+    .gallery-controls button:disabled { opacity:.4; cursor:default; }
+    .gallery-controls button:focus-visible { outline:2px solid #555555; outline-offset:3px; }
+    @media(max-width:640px) { .section { padding-top:56px; } .section-title { margin-bottom:30px; } .entry { padding:30px 0; } }
+    @media print { body { background:white; } nav { display:none!important; } .section { padding-top:36px; } h2,h3 { break-after:avoid; } .field,figure { break-inside:avoid; } }
+  </style>
+</head>
+<body>
+  <a href="#understanding" class="sr-only focus:not-sr-only">跳转到报告正文</a>
+  <div class="mx-auto max-w-[1160px] px-6 sm:px-10 lg:px-14">
+    <header class="flex flex-wrap items-center justify-between gap-4 border-b border-line py-6 sm:py-8">
+      <a href="#" class="serif text-xl no-underline tracking-tight">Brandy Melville</a>
+      <span class="eyebrow text-muted">Product study / 产品研究</span>
+    </header>
+    <main>
+      <section class="grid items-center gap-10 py-12 md:grid-cols-[1.25fr_0.75fr] md:gap-16 md:py-20" aria-labelledby="report-title">
+        <div>
+          <p class="eyebrow mb-7 text-muted">A closer look at the experience</p>
+          <h1 id="report-title" class="text-[42px] leading-[1.13] tracking-[-.035em] sm:text-[58px] lg:text-[70px]">Brandy Melville<br><span class="text-[.72em] leading-[1.7] tracking-normal">App 产品分析</span></h1>
+          <div class="my-7 w-16 border-t border-accent"></div>
+          <p class="max-w-md text-base text-muted sm:text-lg">从沉浸式「逛风格」，到外部种草后的「找同款」——在品牌审美与交易体验之间，寻找更完整的连接。</p>
+          <p class="eyebrow mt-9 text-muted">品牌体验 · 用户路径 · 产品优化</p>
+        </div>
+        <figure class="app-logo mx-auto w-full max-w-[360px] md:ml-auto">
+          <!-- Official China App Store artwork: https://apps.apple.com/cn/app/brandymelville/id1550561250 -->
+          <img src="assets/brandy-app-icon.jpg" width="512" height="512" alt="Brandy Melville App 标志：深蓝底色、白色品牌文字与粉色爱心" class="w-full" style="aspect-ratio:1;object-fit:contain;border-radius:22%;">
+        </figure>
+      </section>
+      <nav aria-label="报告目录" class="flex flex-wrap gap-x-8 gap-y-3 border-y border-line py-5 text-sm text-muted">
+        <a href="#understanding" class="no-underline hover:text-ink">01 产品理解</a><a href="#strengths" class="no-underline hover:text-ink">02 优秀设计</a><a href="#improvements" class="no-underline hover:text-ink">03 改进机会</a><a href="#priority" class="no-underline hover:text-ink">04 优先级逻辑</a><a href="#conclusion" class="no-underline hover:text-ink">05 整体结论</a>
+      </nav>
+
+      <section id="understanding" class="section">
+        <div class="section-title"><p class="eyebrow text-muted">01 / Product perspective</p><h2>一、我对这个产品的理解</h2></div>
+        <div class="grid gap-8 lg:grid-cols-[200px_1fr] lg:gap-14">
+          <aside><span class="label">核心定位</span><p class="serif text-2xl leading-relaxed">品牌审美资产的<br class="hidden lg:block">移动端载体</p></aside>
+          <div class="copy">
+            <p>我更倾向于把 BM App 理解为品牌审美的延伸：它不仅服务于下单，也让用户在低干扰的浏览中感受美式松弛风格、发现喜欢的款式。</p>
+            <div class="audience-pair">
+              <div><span class="label">探索型用户</span><h3>我想逛逛新款</h3><p>没有明确购买目标，浏览上新，寻找穿搭灵感。</p><span class="audience-need">关注风格氛围</span></div>
+              <div><span class="label">外部种草用户</span><h3>我想找到这一件</h3><p>从小红书、抖音带着截图或模糊描述来找同款。</p><span class="audience-need">关注找款与购买</span></div>
+            </div>
+            <div class="perspective-summary"><span class="label">本次分析的切入点</span><p>「逛风格」已形成鲜明体验，「找同款」仍有承接断层。<br>如何保留品牌氛围，同时让外部种草顺畅走向购买？</p></div>
+            <div class="perspective-checks" aria-label="三个评估维度"><span>01 / 愿意持续浏览</span><span>02 / 能够找到商品</span><span>03 / 足以判断适配</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="strengths" class="section">
+        <div class="section-title"><p class="eyebrow text-muted">02 / What works well</p><h2>二、我认为最优秀的三个产品设计</h2></div>
+        <div>
+          <article class="entry visual-entry">
+            <div>
+                <div class="screen-gallery" role="region" aria-roledescription="轮播" aria-label="Brandy Melville App 视觉设计截图">
+                  <figure><img src="assets/app-new-arrivals.jpeg" width="828" height="1792" loading="lazy" alt="BM 新款首页：双列模特穿搭图配合简洁的价格、商品名与收藏图标"><figcaption>01 / 新款首页 · 图片主导浏览</figcaption></figure>
+                  <figure><img src="assets/app-navigation.jpeg" width="828" height="1792" loading="lazy" alt="BM 侧边导航：柔和背景上排列线性图标与功能名称"><figcaption>02 / 侧边导航 · 统一视觉语言</figcaption></figure>
+                  <figure><img src="assets/app-categories.jpeg" width="828" height="1792" loading="lazy" alt="BM 服装分类页：浅粉色品类入口与宽松留白"><figcaption>03 / 服装分类 · 留白与轻量层级</figcaption></figure>
+                  <figure><img src="assets/app-product-grid.jpeg" width="828" height="1792" loading="lazy" alt="BM 商品列表：统一的户外穿搭摄影与低干扰商品信息"><figcaption>04 / 商品列表 · 一致的穿搭氛围</figcaption></figure>
+                  <figure><img src="assets/app-product-options.jpeg" width="828" height="1792" loading="lazy" alt="BM 商品选购面板：颜色、数量与确认按钮组成简洁的信息布局"><figcaption>05 / 选购面板 · 聚焦必要信息</figcaption></figure>
+                </div>
+            </div>
+            <div><header class="visual-entry-heading"><span class="label">优先级 1</span><h3 class="entry-title">视觉设计高度克制，品牌审美与产品体验深度统一</h3></header><div class="design-story">
+              <div><h4 class="label">现象</h4><div class="design-compare">
+                <div><small>常见电商 / 多重运营信息</small><div class="design-tags"><span>开屏广告</span><span>活动 Banner</span><span>满减优惠</span><span>会员弹窗</span><span>猜你喜欢</span></div></div>
+                <div><small>Brandy Melville / 视觉聚焦</small><strong class="design-focus">让商品图片成为主角</strong><p>弱营销干扰 · 统一 UI 与摄影风格</p></div>
+              </div></div>
+              <div class="design-notes">
+                <div><h4 class="label">用户场景</h4><p>像翻阅一本 <strong>Lookbook</strong>，在没有明确购物任务时，沉浸式感受穿搭氛围。</p></div>
+                <div><h4 class="label">为什么重要</h4><p><strong>审美氛围是种草核心。</strong>减少信息打断与认知负担，保留对风格的感知。</p></div>
+              </div>
+              <div class="design-takeaway"><h4 class="label">做得好的本质</h4><p><strong>界面本身，就是品牌表达。</strong>剥离无关信息，让注意力回到款式与穿搭，用一致的页面设计传递品牌调性。</p></div>
+              <div class="design-value" aria-label="设计价值"><strong>价值</strong><span>品牌塑造</span><span>商品种草</span><span>激发购买欲</span></div>
+            </div></div>
+          </article>
+          <article class="entry visual-entry" id="newness-retention">
+            <div><div class="screen-gallery" role="region" aria-roledescription="轮播" aria-label="Brandy Melville 收藏与回访截图">
+              <figure><img src="assets/app-wishlist.jpeg" width="828" height="1792" loading="lazy" alt="我的收藏页：四件已收藏商品以双列图片呈现，显示价格与爱心状态"><figcaption>01 / 我的收藏 · 留住喜欢的款式</figcaption></figure>
+              <figure><img src="assets/app-wishlist-menu.jpeg" width="828" height="1792" loading="lazy" alt="侧边导航中的心愿单入口，右侧保留收藏页面预览"><figcaption>02 / 心愿单入口 · 再次找到心动款</figcaption></figure>
+              <figure><img src="assets/app-wishlist-cart.jpeg" width="828" height="1792" loading="lazy" alt="已收藏毛衣的商品详情页，展示添加购物车成功提示"><figcaption>03 / 商品详情 · 从收藏走向加购</figcaption></figure>
+            </div></div>
+            <div><header class="visual-entry-heading"><span class="label">优先级 2</span><h3 class="entry-title">以新品驱动用户回访，构建健康的用户召回逻辑</h3></header><div class="design-story">
+              <div><h4 class="label">现象</h4><div class="design-compare">
+                <div><small>常见召回方式 / 促销刺激</small><div class="design-tags"><span>优惠券</span><span>限时折扣</span><span>会员日</span></div></div>
+                <div><small>Brandy Melville / 新品与收藏</small><strong class="design-focus">让喜欢成为回访理由</strong><p>新品信息流 + Wishlist 收藏</p></div>
+              </div></div>
+              <div><h4 class="label">用户场景</h4><ol class="return-flow" aria-label="从上新浏览到购买的用户路径"><li><strong>浏览上新</strong><span>定期发现新款</span></li><li><strong>收藏种草</strong><span>保存喜欢款式</span></li><li><strong>再次回访</strong><span>有空回来查看</span></li><li><strong>加购下单</strong><span>意向转为购买</span></li></ol></div>
+              <div class="design-notes"><div><h4 class="label">为什么重要</h4><p>服装并非高频刚需。过度依赖优惠，容易培养<strong>价格敏感</strong>，弱化品牌忠诚。</p></div><div><h4 class="label">用户回访动力</h4><p>对品牌粉丝，刷新品也是<strong>内容消费</strong>：期待新风格，怕错过喜欢的款式。</p></div></div>
+              <div class="design-takeaway"><h4 class="label">做得好的本质</h4><p><strong>把一次心动，留成下一次回访。</strong>上新提供持续浏览的理由，收藏承接暂未购买的兴趣，形成更长效的留存路径。</p></div>
+              <div class="design-value" aria-label="设计价值"><strong>价值</strong><span>沉淀兴趣</span><span>促进回访</span><span>承接购买</span></div>
+            </div></div>
+          </article>
+          <article class="entry visual-entry" id="lightweight-checkout">
+            <div><div class="screen-gallery" role="region" aria-roledescription="轮播" aria-label="Brandy Melville 交易链路截图">
+              <figure><img src="assets/app-checkout.jpeg" width="828" height="1792" loading="lazy" alt="结算页展示商品、颜色、数量、总价和付款入口"><figcaption>01 / 商品结算 · 总价与操作清晰</figcaption></figure>
+              <figure><img src="assets/app-orders.jpeg" width="828" height="1792" loading="lazy" alt="我的订单页展示商品列表和待付款状态"><figcaption>02 / 我的订单 · 状态一目了然</figcaption></figure>
+              <figure><img src="assets/app-payment.jpeg" width="828" height="1792" loading="lazy" alt="订单详情页展示配送信息、支付方式与付款按钮"><figcaption>03 / 订单详情 · 集中确认与付款</figcaption></figure>
+            </div></div>
+            <div><header class="visual-entry-heading"><span class="label">优先级 3</span><h3 class="entry-title">交易链路轻量化，匹配审美驱动型消费的决策特点</h3></header><div class="design-story">
+              <div><h4 class="label">现象</h4><div class="design-compare">
+                <div><small>复杂交易规则 / 增加决策负担</small><div class="design-tags"><span>捆绑套餐</span><span>叠加满减</span><span>复杂优惠券</span></div></div>
+                <div><small>Brandy Melville / 轻量结算</small><strong class="design-focus">让购买意向顺畅落地</strong><p>商品、金额、支付入口清晰呈现</p></div>
+              </div></div>
+              <div><h4 class="label">用户场景</h4><ol class="return-flow" aria-label="从种草到付款的用户路径"><li><strong>款式种草</strong><span>产生购买意向</span></li><li><strong>加入购物车</strong><span>选定心仪商品</span></li><li><strong>确认订单</strong><span>核对商品金额</span></li><li><strong>选择支付</strong><span>继续完成付款</span></li></ol></div>
+              <div class="design-notes"><div><h4 class="label">为什么重要</h4><p>用户已被款式打动，此时需要的是<strong>快速完成购买</strong>，保持决策的连贯性。</p></div><div><h4 class="label">需要避免的干扰</h4><p>反复凑单、计算优惠容易让用户转向<strong>理性比价</strong>，消磨原有购买意向。</p></div></div>
+              <div class="design-takeaway"><h4 class="label">做得好的本质</h4><p><strong>让交易复杂度，匹配购买决策。</strong>保留必要的商品与支付信息，减少额外规则和转化拦截，让心动自然衔接下单。</p></div>
+              <div class="design-value" aria-label="设计价值"><strong>价值</strong><span>减少负担</span><span>保持意向</span><span>顺畅下单</span></div>
+            </div></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="improvements" class="section">
+        <div class="section-title"><p class="eyebrow text-muted">03 / Opportunities to improve</p><h2>三、我认为最值得改进的三个产品设计</h2><p class="mt-3 text-sm text-muted">按优先级排序 / 找得到，判断得清，承接得住</p></div>
+        <div class="space-y-8">
+          <article class="entry visual-entry" id="search-discovery">
+            <div><div class="screen-gallery" role="region" aria-roledescription="轮播" aria-label="Brandy Melville 搜索问题截图">
+              <figure><img src="assets/search-entry.png" width="828" height="1792" loading="lazy" alt="首页搜索栏被红框标出，提示输入产品名，未见图片搜索入口"><figcaption>01 / 搜索入口 · 仅提示输入产品名</figcaption></figure>
+              <figure><img src="assets/search-floral.jpeg" width="828" height="1792" loading="lazy" alt="搜索碎花后提示未找到符合的商品，请重新搜索"><figcaption>02 / 搜索「碎花」· 返回空结果</figcaption></figure>
+              <figure><img src="assets/search-stripe.jpeg" width="828" height="1792" loading="lazy" alt="搜索条纹后提示未找到符合的商品，请重新搜索"><figcaption>03 / 搜索「条纹」· 返回空结果</figcaption></figure>
+            </div></div>
+            <div><header class="visual-entry-heading"><span class="label">优先级 1 / 商品发现</span><h3 class="entry-title">缺少图搜能力，文本搜索对服饰属性理解不足</h3></header><div class="design-story">
+              <div><h4 class="label">现象</h4><div class="design-compare"><div><small>入口 / 找款方式单一</small><strong class="design-focus">有截图，却无处上传</strong><p>当前页面仅见产品名搜索入口</p></div><div><small>结果 / 描述词召回受阻</small><strong class="design-focus">「碎花」「条纹」无结果</strong><p>本次截图中的两次搜索均未命中</p></div></div></div>
+              <div class="design-notes"><div><h4 class="label">用户场景</h4><p>从小红书 / 抖音种草而来，只记得<strong>穿搭截图与视觉特征</strong>，不知道 Blair Top 等官方名称。</p></div><div><h4 class="label">为什么重要</h4><p>用户已形成购买意向，却停在<strong>找不到同款</strong>这一步，后续加购与交易难以继续。</p></div></div>
+              <div class="design-takeaway"><h4 class="label">问题本质</h4><p><strong>用户记得样子，搜索需要名字。</strong>视觉找款心智与产品名搜索之间存在断层，需补齐图搜与服饰属性检索。</p></div>
+              <div><h4 class="label">改进方案</h4><ol class="search-solutions"><li><strong>01 图片搜款</strong>上传截图，匹配同款 / 相似款</li><li><strong>02 属性标签</strong>颜色、图案、面料、版型、袖长</li><li><strong>03 扩展索引</strong>名称 + 品类 + 商品属性</li><li><strong>04 同义词库</strong>plaid = 格子；floral = 碎花；tee = T 恤</li><li><strong>05 轻量筛选</strong>结果页按颜色、版型缩小范围</li></ol></div>
+              <div><h4 class="label">衡量指标</h4><div class="metrics"><span>图搜使用率</span><span>图搜召回准确率</span><span>搜索零结果率</span><span>搜索→详情点击率</span><span>搜索退出率</span></div></div>
+            </div></div>
+          </article>
+          <article class="entry visual-entry" id="fit-confidence">
+            <div><div class="screen-gallery" role="region" aria-roledescription="轮播" aria-label="Brandy Melville 商品适配信息截图">
+              <figure><img src="assets/fit-skirt.jpeg" width="828" height="1792" loading="lazy" alt="Sadie Mini Skirt 详情页，标注裙长25厘米、腰围74厘米和100%粘胶面料"><figcaption>01 / 短裙 · 已有裙长、腰围与面料</figcaption></figure>
+              <figure><img src="assets/fit-martha.jpeg" width="828" height="1792" loading="lazy" alt="Martha Sweater 详情页，标注衣长59厘米、胸围108厘米和面料成分"><figcaption>02 / 麻花毛衣 · 衣长59cm，胸围108cm</figcaption></figure>
+              <figure><img src="assets/fit-brianna.jpeg" width="828" height="1792" loading="lazy" alt="Brianna Striped Sweater 详情页，标注衣长59厘米、胸围100厘米和100%棉"><figcaption>03 / 条纹毛衣 · 衣长59cm，胸围100cm</figcaption></figure>
+            </div></div>
+            <div><header class="visual-entry-heading"><span class="label">优先级 2 / 购买决策</span><h3 class="entry-title">商品详情页无法充分回答<br>「这件衣服我穿上是什么效果」</h3></header><div class="design-story">
+              <div><h4 class="label">现象</h4><div class="design-compare"><div><small>已提供 / 基础商品信息</small><strong class="design-focus">有尺寸，也有面料</strong><p>截图展示衣长 / 裙长、胸围 / 腰围与成分</p></div><div><small>截图中未见 / 适配参考</small><strong class="design-focus">松紧与弹性仍需猜</strong><p>未见标准化版型、弹性等级或试穿反馈</p></div></div></div>
+              <div class="design-notes"><div><h4 class="label">用户场景</h4><p>喜欢模特上身效果，看到尺寸后仍不确定<strong>自己穿会不会过短、过紧</strong>，犹豫是否下单。</p></div><div><h4 class="label">为什么重要</h4><p>同为59cm衣长，两件毛衣胸围分别为<strong>108cm与100cm</strong>。用户仍需结合身材判断松量。</p></div></div>
+              <div class="design-takeaway"><h4 class="label">问题本质</h4><p><strong>从「商品尺寸」到「我的上身效果」，还差一步。</strong>基础参数已具备，但不足以独立解释版型、弹性和不同身材的适配感受。</p></div>
+              <div><h4 class="label">改进方案</h4><div class="design-notes"><div><strong>01 / 补齐适配说明</strong><p>在折叠模块内说明测量方式、修身 / 宽松版型、弹性等级与试穿参考。</p></div><div><strong>02 / 汇总版型反馈</strong><p>收货后选择偏小 / 标准 / 偏大，汇总展示；轻量反馈保持页面简洁。</p></div></div></div>
+              <div><h4 class="label">衡量指标</h4><div class="metrics"><span>详情→加购转化率</span><span>尺码说明查看率</span><span>整体退货率</span><span>版型相关退货占比</span></div></div>
+            </div></div>
+          </article>
+          <article class="entry visual-entry" id="stock-recovery">
+            <div><div class="screen-gallery" role="region" aria-roledescription="轮播" aria-label="Brandy Melville 缺货问题截图">
+              <figure><img src="assets/stock-floral.jpeg" width="828" height="1792" loading="lazy" alt="Zelly Floral Top 商品页仍显示加入购物车，操作后提示此商品暂无库存"><figcaption>01 / 碎花上衣 · 加购后提示暂无库存</figcaption></figure>
+              <figure><img src="assets/stock-ribbed.jpeg" width="828" height="1792" loading="lazy" alt="Zelly Ribbed Top 商品页显示此商品暂无库存，截图中未见补货提醒入口"><figcaption>02 / 罗纹上衣 · 缺货后未见订阅入口</figcaption></figure>
+            </div></div>
+            <div><header class="visual-entry-heading"><span class="label">优先级 3 / 需求承接</span><h3 class="entry-title">缺货商品缺少<br>高意向用户承接机制</h3></header><div class="design-story">
+              <div><h4 class="label">现象</h4><div class="design-compare"><div><small>购买入口 / 仍可点击加购</small><strong class="design-focus">想买，才发现没货</strong><p>操作后提示「此商品暂无库存」</p></div><div><small>后续承接 / 截图中未见</small><strong class="design-focus">没有下一步</strong><p>未见补货订阅或相似款推荐入口</p></div></div></div>
+              <div class="design-notes"><div><h4 class="label">用户场景</h4><p>种草后找到喜欢的款式，却无法加购。希望<strong>补货时收到通知</strong>，不必反复刷新。</p></div><div><h4 class="label">为什么重要</h4><p>明确的购买意向被缺货打断，用户可能离开；品牌也难以量化<strong>未成交的需求</strong>。</p></div></div>
+              <div class="design-takeaway"><h4 class="label">问题本质</h4><p><strong>商品暂时缺货，不等于需求结束。</strong>缺货提示只告知结果，还需要为「现在买不了」提供后续路径。</p></div>
+              <div><h4 class="label">改进方案</h4><ol class="search-solutions"><li><strong>01 / 补货订阅</strong><br>缺货按钮改为提醒入口；支持该色 / 全色，推送或邮件通知。</li><li><strong>02 / 相似款承接</strong><br>确定不再补货时，推荐 3–5 件同版型、同风格商品。</li><li><strong>03 / 记录需求</strong><br>汇总订阅人数，为补货采购与款式热度判断提供参考。</li></ol></div>
+              <div><h4 class="label">衡量指标</h4><div class="metrics"><span>缺货商品订阅率</span><span>补货通知打开率</span><span>提醒→下单转化率</span><span>缺货详情页退出率</span></div></div>
+            </div></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="priority" class="section">
+        <div class="section-title"><p class="eyebrow text-muted">04 / Prioritization</p><h2>四、优先级逻辑说明</h2></div>
+        <p class="copy mb-9 max-w-3xl">三点优化对应完整的用户购物漏斗，尤其覆盖小红书 / 抖音种草用户从找款、判断适配，到缺货后等待购买的完整路径。</p>
+        <div class="grid gap-8 md:grid-cols-3 md:gap-10">
+          <div class="border-t border-accent pt-6"><span class="label">01 / 漏斗前端</span><h3 class="mb-3 text-2xl">能不能找到商品</h3><p class="copy">搜索 &amp; 图搜承接外部种草流量。找不到商品，后续加购、下单都无从谈起，因此优先级最高。</p></div>
+          <div class="border-t border-accent pt-6"><span class="label">02 / 决策环节</span><h3 class="mb-3 text-2xl">能不能判断适配</h3><p class="copy">商品详情信息承接搜索成功的用户，帮助判断适不适合自己，影响转化与退货，优先级次之。</p></div>
+          <div class="border-t border-accent pt-6"><span class="label">03 / 交易末端</span><h3 class="mb-3 text-2xl">想买但没货怎么办</h3><p class="copy">缺货承接保留已经形成的购买意向。处在漏斗末端，覆盖部分用户，在本次排序中优先级第三。</p></div>
+        </div>
+        <p class="mt-9 border-t border-line pt-6 text-sm text-muted">本次排序以路径依赖与覆盖范围为主要依据，优先补齐找款能力。实际排期仍需结合搜索失败量、售罄占比、预期收益与实现成本验证。</p>
+      </section>
+
+      <section id="conclusion" class="section pb-20 sm:pb-28">
+        <div class="section-title"><p class="eyebrow text-muted">05 / Final perspective</p><h2>五、整体结论</h2></div>
+        <div class="grid gap-9 lg:grid-cols-[200px_1fr] lg:gap-14">
+          <p class="serif text-3xl leading-relaxed">保留「逛」的美感，<br>补齐「买」的确定性。</p>
+          <div class="copy"><p>Brandy Melville App 最成功的地方，是做好了「逛」这个场景。依靠极简视觉、新品驱动回访、轻量化下单链路，把品牌审美转化成沉浸式购物体验，很好地完成品牌种草。</p><p>但本次分析认为，产品的重要短板，是对小红书、抖音等外部平台种草溯源流量的承接不足。用户带着博主穿搭截图、模糊款式描述来 App 找同款，图搜与服饰属性关键词检索能力的缺失，让这条路径难以闭环。</p><p>下一阶段的核心目标是：在保留极简风格的前提下，补齐交易链路基础能力，让种草用户<strong>想找的时候找得到、找到之后能判断适配度、暂时缺货时需求不会直接流失</strong>，提升整条购物漏斗的转化效率。</p></div>
+        </div>
+      </section>
+    </main>
+    <footer class="flex flex-wrap justify-between gap-5 border-t border-line py-7 text-xs text-muted"><span class="serif text-base">Brandy Melville / Product analysis</span></footer>
+  </div>
+  <script>
+    document.querySelectorAll('.screen-gallery').forEach(gallery => {
+      const slides = Array.from(gallery.querySelectorAll('figure'));
+      let current = 0;
+      const controls = document.createElement('div');
+      controls.className = 'gallery-controls';
+      const previous = document.createElement('button');
+      previous.type = 'button';
+      previous.textContent = '上一张';
+      const status = document.createElement('span');
+      status.setAttribute('role', 'status');
+      status.setAttribute('aria-live', 'polite');
+      status.setAttribute('aria-atomic', 'true');
+      const next = document.createElement('button');
+      next.type = 'button';
+      next.textContent = '下一张';
+      controls.append(previous, status, next);
+      gallery.append(controls);
+      function render() {
+        slides.forEach((slide, index) => { slide.hidden = index !== current; });
+        status.textContent = `${current + 1} / ${slides.length}`;
+        previous.disabled = current === 0;
+        next.disabled = current === slides.length - 1;
+      }
+      previous.addEventListener('click', () => { if (current > 0) { current--; render(); } });
+      next.addEventListener('click', () => { if (current < slides.length - 1) { current++; render(); } });
+      render();
+    });
+  </script>
+</body>
+</html>
